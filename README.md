@@ -61,15 +61,15 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ```text
 curso-react-step/
 │
-├── aula01/
-├── aula02/
-├── aula03/
-├── aula04/
-├── aula05/
-├── aula06/
-├── aula07/
-├── aula08/
-├── aula09/
+├── aula1-react/
+├── aula2-react/
+├── aula3-react/
+├── aula4-react/
+├── aula5-react/
+├── aula6-react/
+├── aula7-react/
+├── aula8-react/
+├── aula9-react/
 │
 ├── projeto-final/
 │
