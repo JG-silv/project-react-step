@@ -1,9 +1,16 @@
-import React from "react";
+const Welcome = ({ name }) => {
+  const saudacao = () => {
+    return `<h2>Olá, ${name}! Bem-vindo ao nosso site.</h2>`;
+  };
 
-const Welcome = ({ name }) => (
-  <div>
-    <h1>Bem-vindo, {name}!</h1>
-  </div>
-);
+  return (
+    <>
+      <div>
+        <h1>Bem-vindo, {name}!</h1>
+      </div>
+      <button onClick={saudacao}>Exibir Saudação</button>
+    </>
+  );
+};
 
 export default Welcome;

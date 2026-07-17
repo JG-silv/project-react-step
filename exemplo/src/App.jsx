@@ -1,13 +1,12 @@
 import React from "react";
-import Welcome from "./components/Welcome";
+import PlacarDoJogo from "./components/PlacarDoJogo";
 
-const App = () => {
+function App() {
   return (
     <div>
-      <Welcome name="Fabio" />
-      <p>outro texto</p>
+      <PlacarDoJogo />
     </div>
   );
-};
+}
 
 export default App;
