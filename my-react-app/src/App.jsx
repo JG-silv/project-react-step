@@ -1,10 +1,10 @@
 import React from "react";
-import ItemList from "./components/ItemList";
+import ListaDeProdutos from "./components/ListaDeProdutos";
 
 function App() {
   return (
     <div>
-      <ItemList />
+      <ListaDeProdutos />
     </div>
   );
 }
