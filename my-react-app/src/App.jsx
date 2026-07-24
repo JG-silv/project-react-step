@@ -1,10 +1,14 @@
 import React from "react";
-import ListaDeProdutos from "./components/ListaDeProdutos";
+import PlacarDoJogo from "./components/PlacarDoJogo";
 
+import Pai from "./components/Pai";
+import React from "react";
 function App() {
   return (
     <div>
-      <ListaDeProdutos />
+    
+      <Pai />
+      <PlacarDoJogo />
     </div>
   );
 }

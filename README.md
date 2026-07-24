@@ -1,6 +1,6 @@
 # ⚛️ Curso React - STEP
 
-Repositório destinado ao registro das atividades, exercícios, projetos e anotações desenvolvidos durante o curso de **React** da STEP.
+Repositório destinado ao registro das atividades, exercícios, projetos e anotações desenvolvidos durante o curso de **React** da STEP COMPUTER ACADEMY.
 
 Este material representa minha evolução ao longo da formação, reunindo os principais conteúdos estudados e as implementações realizadas em cada aula.
 
@@ -23,7 +23,8 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 2
 **Fragments, Tipos de Componentes e Hooks**
 
-###  Aula 3
+
+### ✅ Aula 3
 **Props e Passagem de Dados (Pai/Filho)**
 
 ###  Aula 4
