@@ -1,5 +1,5 @@
 import React from "react";
-import PlacarDoJogo from "./components/ItemList";
+import ItemList from "./components/ItemList";
 
 function App() {
   return (
