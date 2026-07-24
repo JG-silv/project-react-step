@@ -1,9 +1,14 @@
-import Pai from "./components/Pai";
 
+import Pai from "./components/Pai";
+import React from "react";
 function App() {
   return (
     <div>
+
       <Pai />
+
+      <PlacarDoJogo />
+
     </div>
   );
 }
