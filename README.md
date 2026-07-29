@@ -24,7 +24,7 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 **Fragments, Tipos de Componentes e Hooks**
 
 
-### ✅ Aula 3
+###  Aula 3
 **Props e Passagem de Dados (Pai/Filho)**
 
 ###  Aula 4
