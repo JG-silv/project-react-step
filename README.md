@@ -27,7 +27,7 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 3
 **Props e Passagem de Dados (Pai/Filho)**
 
-###  Aula 4
+### ✅ Aula 4
 **Iteração sobre Arrays**
 
 ###  Aula 5
