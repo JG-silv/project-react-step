@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LoginStatus from './LoginStatus';
-import Notification from './Notification';
+import LoginStatus from './components/LoginStatus';
+import Notification from './components/Notification';
 //O App.jsx gerencia o estado isLoggedIn e altera o texto do botão com ternário: {isLoggedIn ? 'Logout' : 'Login'}. 
 // Quando o estado muda, tanto o App quanto o LoginStatus (que recebe a prop) são re-renderizados.
 function App() {
