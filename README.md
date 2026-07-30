@@ -20,7 +20,7 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 1
 **O que é o React e montando o ambiente**
 
-### ✅ Aula 2
+###  Aula 2
 **Fragments, Tipos de Componentes e Hooks**
 
 ###  Aula 3
