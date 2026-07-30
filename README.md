@@ -14,7 +14,6 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 - Desenvolvimento do projeto final do curso.
 
 ---
-
 ## 📖 Aulas Concluídas
 
 ### ✅ Aula 1
