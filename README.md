@@ -32,7 +32,7 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 5
 **Renderização Condicional e Re-renderização**
 
-###  Aula 6
+### ✅ Aula 6
 **Estilização de Componentes**
 
 ###  Aula 7
