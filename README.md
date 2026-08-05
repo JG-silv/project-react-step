@@ -35,8 +35,8 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 6
 **Estilização de Componentes**
 
-###  Aula 7
-**Requisições HTTP**
+### ✅ Aula 7
+**Estilização de Componentes TAILWIND, NATIVE UI**
 
 ###  Aula 8
 **Formulários em React**
