@@ -32,11 +32,11 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 5
 **Renderização Condicional e Re-renderização**
 
-###  Aula 6
+### ✅ Aula 6
 **Estilização de Componentes**
 
-###  Aula 7
-**Requisições HTTP**
+### ✅ Aula 7
+**Estilização de Componentes NATIVE UI, TAILWIND CSS**
 
 ###  Aula 8
 **Formulários em React**
