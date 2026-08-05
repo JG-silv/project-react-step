@@ -1,0 +1,16 @@
+/* Button Css */
+.btn-custom {
+  background-color: #6a02fd;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-custom:hover {
+  background-color: #2f0b83;
+}
+          

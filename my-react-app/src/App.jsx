@@ -1,26 +1,23 @@
-import { useState } from 'react';
-import LoginStatus from './components/LoginStatus';
-import Notification from './components/Notification';
+import ButtonCSS from './components/ButtonCSS';
+import ButtonInline from './components/ButtonInline';
+import ButtonStyled from './components/ButtonStyled';
+
 //O App.jsx gerencia o estado isLoggedIn e altera o texto do botão com ternário: {isLoggedIn ? 'Logout' : 'Login'}. 
 // Quando o estado muda, tanto o App quanto o LoginStatus (que recebe a prop) são re-renderizados.
-function App() {
-  
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showNotif, setShowNotif] = useState(false);
 
+function App() {
   return (
     <div>
-      <LoginStatus isLoggedIn={isLoggedIn} />
-      <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
-        {isLoggedIn ? 'Logout' : 'Login'}
-      </button>
-       <Notification showNotification={showNotif} />
-      <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
-        {isLoggedIn ? 'Logout' : 'Login'}
-      </button>
-      <button onClick={() => setShowNotif(!showNotif)}>
-        {showNotif ? 'Ocultar' : 'Mostrar'} Notificação
-      </button>
+      <h1>Botão com CSS Externo</h1>
+      <ButtonCSS label="CSS Externo" />
+
+      <h1>Botão com Inline Styles</h1>
+      <ButtonInline label="Primário" primary />
+      <ButtonInline label="Secundário" />
+
+      <h1>Botão com Styled Components</h1>
+      <ButtonStyled label="Primário" primary />
+      <ButtonStyled label="Secundário" />
     </div>
   );
 }
