@@ -1,6 +1,4 @@
 
-
-
 const BoasVindas = ({ nome }) => {
   return (
     <div>
