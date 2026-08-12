@@ -1,0 +1,92 @@
+import { useState } from 'react';
+
+const FeedbackForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(null);
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = 'Nome é obrigatório';
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email é obrigatório';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email inválido';
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Mensagem é obrigatória';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Mensagem deve ter no mínimo 10 caracteres';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      setSubmitted(formData);
+      setFormData({ name: '', email: '', message: '' });
+      setErrors({});
+    }
+  };
+
+  const handleClear = () => {
+    setFormData({ name: '', email: '', message: '' });
+    setErrors({});
+    setSubmitted(null);
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Nome:</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          {errors.name && <span className="error">{errors.name}</span>}
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          {errors.email && <span className="error">{errors.email}</span>}
+        </div>
+
+        <div>
+          <label>Mensagem:</label>
+          <textarea name="message" value={formData.message} onChange={handleChange} />
+          {errors.message && <span className="error">{errors.message}</span>}
+        </div>
+
+        <button type="submit">Enviar Feedback</button>
+        <button type="button" onClick={handleClear}>Limpar</button>
+      </form>
+
+      {submitted && (
+        <div className="feedback-submitted">
+          <h3>Feedback Enviado:</h3>
+          <p><strong>Nome:</strong> {submitted.name}</p>
+          <p><strong>Email:</strong> {submitted.email}</p>
+          <p><strong>Mensagem:</strong> {submitted.message}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FeedbackForm;
+                
