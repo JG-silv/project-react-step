@@ -38,12 +38,26 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 7
 **Estilização de Componentes NATIVE UI, TAILWIND CSS**
 
-###  Aula 8
+### ✅ Aula 8
 **Formulários em React**
 
-###  Aula 9
+### ✅ Aula 9 
+**Formulários em React**
+
+### Aula 10 
 **Roteamento com React**
 
+### Aula 11 
+**Context API e Redux**
+
+### Aula 12 
+**Portals e Refs**
+
+### Aula 13 
+**Testando Aplicações React**
+
+### Aula 14
+**Componentes de Classe**
 ---
 
 # 💻 Tecnologias Utilizadas
@@ -70,6 +84,11 @@ curso-react-step/
 ├── aula7-react/
 ├── aula8-react/
 ├── aula9-react/
+├── aula10-react/
+├── aula11-react/
+├── aula12-react/
+├── aula13-react/
+├── aula14-react/
 ├── deveres-de-casa/
 │
 ├── projeto-final/
