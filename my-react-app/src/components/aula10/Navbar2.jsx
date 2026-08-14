@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-function Navbar2 () {
+const Navbar2 = () => {
   return (
     <nav>
 

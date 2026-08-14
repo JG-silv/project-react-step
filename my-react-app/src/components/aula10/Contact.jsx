@@ -1,5 +1,5 @@
 
-function Contact () {
+const Contact = () => {
     return 
     <div> 
         <h1>
