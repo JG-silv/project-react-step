@@ -1,14 +1,18 @@
-import FeedbackForm from "./components/aula9/FeedbackForm";
-import RegistrationForm from "./components/aula9/RegistrationForm";
 
-function App() {
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Blog from './components/Blog';
+import Post from './components/Post';
+
+const App = () => {
   return (
-     <div>
-      <FeedbackForm />
-      <RegistrationForm />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Blog />} />
+        <Route path="/post/:id" element={<Post />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
                 
