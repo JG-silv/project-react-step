@@ -22,10 +22,10 @@ const Navbar2 = () => {
       </NavLink>
 
       <NavLink 
-        to="/contact" 
+        to="/login" 
         className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
       > 
-        Contato 
+        Login 
       </NavLink>
     </nav>
     
