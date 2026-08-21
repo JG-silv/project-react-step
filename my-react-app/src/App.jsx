@@ -1,22 +1,23 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './components/aula10/Home';
-import Login from './components/aula10/Login';
-import PrivateRoute from './components/aula10/PrivateRoute';
-import User from './components/aula10/User';
-import About from './components/aula10/About';
-import './App.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import Home from './components/aulas-integradas/Home';
+import Login from './components/aulas-integradas/Login';
+import Registar from './components/aulas-integradas/Registar';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/home" element={ <PrivateRoute><Home /></PrivateRoute>} />
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/user/:id" element={<User />} />
-      </Routes>
-    </BrowserRouter>
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registrar" element={<Registar />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   );
 };
 
