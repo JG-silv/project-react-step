@@ -58,6 +58,8 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 
 ### Aula 14
 **Componentes de Classe**
+
+### Aulas Integradas
 ---
 
 # 💻 Tecnologias Utilizadas
@@ -90,6 +92,7 @@ curso-react-step/
 ├── aula13-react/
 ├── aula14-react/
 ├── deveres-de-casa/
+├── aulas-integradas/
 │
 ├── projeto-final/
 │
