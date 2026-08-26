@@ -19,15 +19,15 @@ export default function Registar() {
       const resposta = await fetch('https://projeto-node-step-t5i1.vercel.app/registrar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: dados.nome,
-          email: dados.email,
-          senha: dados.senha,
-          role: dados.role,
-        }),
+        body: JSON.stringify(dados),
       });
 
-      if (!resposta.ok) throw new Error('Não foi possível registrar.');
+      const resultado = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(resultado.mensagem || 'Não foi possivel registrar!');
+      }
+
       navigate('/login');
     } catch (error) {
       setErro(error.message);
@@ -40,19 +40,19 @@ export default function Registar() {
       <form onSubmit={handleSubmit}>
         <FormControl isRequired mb="15px">
           <FormLabel>Nome</FormLabel>
-          <Input name="nome" value={dados.nome} onChange={handleChange} placeholder="Digite seu nome" />
+          <Input name="nome" value={dados.nome} onChange={handleChange} />
         </FormControl>
         <FormControl isRequired mb="15px">
           <FormLabel>Email</FormLabel>
-          <Input name="email" type="email" value={dados.email} onChange={handleChange} placeholder="Digite seu email" />
+          <Input name="email" type="email" value={dados.email} onChange={handleChange} />
         </FormControl>
         <FormControl isRequired mb="15px">
           <FormLabel>Senha</FormLabel>
-          <Input name="senha" type="password" value={dados.senha} onChange={handleChange} placeholder="Digite sua senha" />
+          <Input name="senha" type="password" value={dados.senha} onChange={handleChange} />
         </FormControl>
         <FormControl isRequired mb="20px">
-          <FormLabel>Role</FormLabel>
-          <Select name="role" value={dados.role} onChange={handleChange} placeholder="Escolha uma role">
+          <FormLabel>Tipo de usuário</FormLabel>
+          <Select name="role" value={dados.role} onChange={handleChange} placeholder="Escolha uma opção">
             <option value="user">Usuário</option>
             <option value="admin">Administrador</option>
           </Select>
