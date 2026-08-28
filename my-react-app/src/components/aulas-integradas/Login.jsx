@@ -33,7 +33,7 @@ export default function Login() {
       }
 
       localStorage.setItem('token', resultado.token);
-      navigate('/home');
+
     } catch (error) {
       setErro(error.message);
     }
