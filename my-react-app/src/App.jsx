@@ -12,13 +12,13 @@ const App = () => {
     <ChakraProvider>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registrar" element={<Registar />} />
           <Route path="/home" element={<Home />} />
           <Route path="/produtos/criar" element={<CriarProduto />} />
           <Route path="/produto/:id" element={<EditarProduto />} />
-          {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

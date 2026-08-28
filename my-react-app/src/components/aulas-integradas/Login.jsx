@@ -23,7 +23,6 @@ export default function Login() {
       });
 
       const resultado = await resposta.json();
-      navigate('/home');
       if (!resposta.ok) {
         throw new Error(resultado.mensagem || 'E-mail ou senha inválidos.');
       }
@@ -33,6 +32,7 @@ export default function Login() {
       }
 
       localStorage.setItem('token', resultado.token);
+      navigate('/home');
 
     } catch (error) {
       setErro(error.message);

@@ -1,0 +1,8 @@
+{
+  "installCommand": "npm --prefix my-react-app install",
+  "buildCommand": "npm --prefix my-react-app run build",
+  "outputDirectory": "my-react-app/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
