@@ -15,10 +15,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registrar" element={<Registar />} />
-          <Route
-            path="/home"
-            element={localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined' ? <Home /> : <Navigate to="/login" replace />}
-          />
+          <Route path="/home" element={<Home />} />
           <Route
             path="/produtos/criar"
             element={localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined' ? <CriarProduto /> : <Navigate to="/login" replace />}
