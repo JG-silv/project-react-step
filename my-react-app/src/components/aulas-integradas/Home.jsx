@@ -62,7 +62,6 @@ export default function Home() {
     <Container maxW="1100px" py={{ base: '25px', md: '50px' }}>
       <Box className="products-header">
         <Box>
-          <Text className="eyebrow">CATÁLOGO</Text>
           <Heading size="lg">Meus produtos</Heading>
           <Text color="gray.500" mt="1">Gerencie seu catálogo de forma rápida e visual.</Text>
         </Box>
