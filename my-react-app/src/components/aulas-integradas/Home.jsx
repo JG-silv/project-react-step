@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Button, Container, Heading, ListItem, Text, UnorderedList } from '@chakra-ui/react';
+import { Badge, Box, Button, Card, CardBody, CardFooter, Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import ProdutoImagem from './ProdutoImagem';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -58,43 +59,56 @@ export default function Home() {
   }, []);
 
   return (
-    <Container maxW="700px" mt="50px" p="20px" borderWidth="1px" borderRadius="8px">
-      <Heading size="lg" mb="20px">Produtos</Heading>
+    <Container maxW="1100px" py={{ base: '25px', md: '50px' }}>
+      <Box className="products-header">
+        <Box>
+          <Text className="eyebrow">CATÁLOGO</Text>
+          <Heading size="lg">Meus produtos</Heading>
+          <Text color="gray.500" mt="1">Gerencie seu catálogo de forma rápida e visual.</Text>
+        </Box>
+        <Box className="products-actions">
+          <Button onClick={handleLogout} variant="outline">
+            <FontAwesomeIcon icon={faRightFromBracket} />
+            <span style={{ marginLeft: '8px' }}>Sair</span>
+          </Button>
+          <Button as={RouterLink} to="/produtos/criar" colorScheme="blue">
+            <FontAwesomeIcon icon={faPlus} />
+            <span style={{ marginLeft: '8px' }}>Criar produto</span>
+          </Button>
+        </Box>
+      </Box>
 
-      <Button onClick={handleLogout} mr="10px">
-        <FontAwesomeIcon icon={faRightFromBracket} />
-        <span style={{ marginLeft: '8px' }}>Sair</span>
-      </Button>
-      <Button as={RouterLink} to="/produtos/criar" colorScheme="blue">
-        <FontAwesomeIcon icon={faPlus} />
-        <span style={{ marginLeft: '8px' }}>Criar produto</span>
-      </Button>
-
-      <Text mt="25px" fontWeight="bold">Produtos cadastrados</Text>
+      <Text mt="35px" mb="15px" fontWeight="bold">Produtos cadastrados ({produtos.length})</Text>
       {erro && <Text color="red.500" mt="15px">{erro}</Text>}
 
       {produtos.length === 0 && !erro && (
         <Text mt="10px">Nenhum produto cadastrado.</Text>
       )}
 
-      <UnorderedList mt="10px">
+      <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing="20px" mt="10px">
         {produtos.map((produto) => {
           const id = produto._id || produto.id;
 
           return (
-            <ListItem key={id} mb="15px">
-              {produto.nome} - R$ {Number(produto.preco).toFixed(2)}
-              <br />
-              <Button as={RouterLink} to={`/produto/${id}`} size="sm" mt="5px" mr="5px">
-                Editar
-              </Button>
-              <Button onClick={() => handleDelete(id)} size="sm" colorScheme="red" mt="5px">
-                Deletar
-              </Button>
-            </ListItem>
+            <Card key={id} className="product-card" overflow="hidden">
+              <ProdutoImagem produto={produto} />
+              <CardBody>
+                <Box display="flex" justifyContent="space-between" alignItems="center" gap="10px">
+                  <Heading size="md" noOfLines={1}>{produto.nome}</Heading>
+                  {produto.categoria && <Badge colorScheme="blue">{produto.categoria}</Badge>}
+                </Box>
+                {produto.descricao && <Text color="gray.500" fontSize="sm" mt="8px" noOfLines={2}>{produto.descricao}</Text>}
+                <Text className="product-price">R$ {Number(produto.preco).toFixed(2)}</Text>
+                <Text color="gray.500" fontSize="sm">Estoque: {produto.estoque ?? '—'}</Text>
+              </CardBody>
+              <CardFooter gap="8px" pt="0">
+                <Button as={RouterLink} to={`/produto/${id}`} size="sm" flex="1">Editar</Button>
+                <Button onClick={() => handleDelete(id)} size="sm" colorScheme="red" variant="outline" flex="1">Deletar</Button>
+              </CardFooter>
+            </Card>
           );
         })}
-      </UnorderedList>
+      </SimpleGrid>
     </Container>
   );
 }

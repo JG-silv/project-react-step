@@ -1,19 +1,26 @@
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, Container, FormControl, FormLabel, Heading, Input, Link, Text, Textarea } from '@chakra-ui/react';
+import { converterPreco, formatarPrecoDigitado } from './preco';
 
 export default function CriarProduto() {
   const navigate = useNavigate();
-  const [dados, setDados] = useState({ nome: '', descricao: '', preco: '', categoria: '', estoque: '' });
+  const [dados, setDados] = useState({ nome: '', descricao: '', preco: '', categoria: '', estoque: '', imagem: '' });
   const [erro, setErro] = useState('');
 
   function handleChange(event) {
-    setDados({ ...dados, [event.target.name]: event.target.value });
+    const valor = event.target.name === 'preco' ? formatarPrecoDigitado(event.target.value) : event.target.value;
+    setDados({ ...dados, [event.target.name]: valor });
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setErro('');
+    const preco = converterPreco(dados.preco);
+    if (!Number.isFinite(preco) || preco <= 0) {
+      setErro('Informe um preço válido maior que zero.');
+      return;
+    }
 
     try {
       const token = localStorage.getItem('token');
@@ -27,9 +34,10 @@ export default function CriarProduto() {
         body: JSON.stringify({
           nome: dados.nome,
           descricao: dados.descricao,
-          preco: Number(dados.preco),
+          preco,
           categoria: dados.categoria,
           estoque: Number(dados.estoque),
+          imagem: dados.imagem,
         }),
       });
 
@@ -59,11 +67,15 @@ export default function CriarProduto() {
         </FormControl>
         <FormControl isRequired mb="15px">
           <FormLabel>Preço</FormLabel>
-          <Input name="preco" type="number" value={dados.preco} onChange={handleChange} />
+          <Input name="preco" inputMode="decimal" placeholder="R$ 0,00" value={dados.preco} onChange={handleChange} />
         </FormControl>
         <FormControl mb="15px">
           <FormLabel>Categoria</FormLabel>
           <Input name="categoria" value={dados.categoria} onChange={handleChange} />
+        </FormControl>
+        <FormControl mb="15px">
+          <FormLabel>URL da imagem (opcional)</FormLabel>
+          <Input name="imagem" type="url" placeholder="https://..." value={dados.imagem} onChange={handleChange} />
         </FormControl>
         <FormControl isRequired mb="20px">
           <FormLabel>Estoque</FormLabel>
