@@ -23,11 +23,11 @@ export default function Login() {
       });
 
       const resultado = await resposta.json();
-
+      navigate('/home');
       if (!resposta.ok) {
         throw new Error(resultado.mensagem || 'E-mail ou senha inválidos.');
       }
-
+      
       if (!resultado.token) {
         throw new Error('A API não retornou o token de login.');
       }
