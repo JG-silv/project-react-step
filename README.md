@@ -44,13 +44,13 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### ✅ Aula 9 
 **Formulários em React**
 
-###  Aula 10 
+### ✅ Aula 10 
 **Roteamento com React**
 
-###  Aula 11 
+### ✅ Aula 11 
 **Context API e Redux**
 
-###  Aula 12 
+### ✅ Aula 12 
 **Portals e Refs**
 
 ###  Aula 13 
@@ -59,7 +59,7 @@ Este material representa minha evolução ao longo da formação, reunindo os pr
 ### Aula 14
 **Componentes de Classe**
 
-### Aulas Integradas
+### ✅ Aulas Integradas
 ---
 
 # 💻 Tecnologias Utilizadas
