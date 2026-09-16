@@ -15,8 +15,28 @@ function imagemPadrao(produto) {
   return imagensPorCategoria[chave] || imagensPorCategoria.notebook;
 }
 
+function imagemValida(imagem) {
+  if (!imagem) {
+    return false;
+  }
+
+  try {
+    const url = new URL(imagem);
+    const ehSamsungQuebrada = url.hostname === 'images.samsung.com' && (
+      url.pathname.includes('galaxy-s234-ultra') ||
+      url.searchParams.get('imbypass') === 'truedd'
+    );
+
+    return url.protocol.startsWith('http') && !ehSamsungQuebrada;
+  } catch {
+    return false;
+  }
+}
+
 export default function ProdutoImagem({ produto }) {
-  const imagem = produto.imagem || produto.image || produto.foto || imagemPadrao(produto);
+  const imagemProduto = produto.imagem || produto.image || produto.foto;
+  const fallback = imagemPadrao(produto);
+  const imagem = imagemValida(imagemProduto) ? imagemProduto : fallback;
 
   return (
     <Box className="product-image-wrap">
@@ -26,7 +46,9 @@ export default function ProdutoImagem({ produto }) {
         className="product-image"
         loading="lazy"
         onError={(event) => {
-          event.currentTarget.src = imagemPadrao(produto);
+          if (event.currentTarget.src !== fallback) {
+            event.currentTarget.src = fallback;
+          }
         }}
       />
       <Text className="product-image-fallback" aria-hidden="true">📦</Text>

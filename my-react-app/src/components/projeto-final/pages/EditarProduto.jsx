@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { Button, Container, FormControl, FormLabel, Heading, Input, Link, Text, Textarea } from '@chakra-ui/react';
 import { converterPreco, formatarPreco, formatarPrecoDigitado } from './preco';
 import PageLayout from '../templates/PageLayout';
+import { API_URL, getAuthHeaders, lerResposta, mensagemErroApi } from '../services/api';
 
 export default function EditarProduto() {
   const { id } = useParams();
@@ -18,8 +19,8 @@ export default function EditarProduto() {
   useEffect(() => {
     async function buscarProduto() {
       try {
-        const resposta = await fetch(`https://projeto-node-step-t5i1.vercel.app/produtos/${id}`);
-        const resultado = await resposta.json();
+        const resposta = await fetch(`${API_URL}/produtos/${id}`);
+        const resultado = await lerResposta(resposta);
         const produto = resultado.produto || resultado;
 
         if (!resposta.ok) {
@@ -52,12 +53,11 @@ export default function EditarProduto() {
     }
 
     try {
-      const token = localStorage.getItem('token');
-      const resposta = await fetch(`https://projeto-node-step-t5i1.vercel.app/produtos/${id}`, {
+      const resposta = await fetch(`${API_URL}/produtos/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          ...getAuthHeaders(),
         },
         body: JSON.stringify({
           nome: dados.nome,
@@ -69,10 +69,10 @@ export default function EditarProduto() {
         }),
       });
 
-      const resultado = await resposta.json();
+      const resultado = await lerResposta(resposta);
 
       if (!resposta.ok) {
-        throw new Error(resultado.mensagem || 'Não foi possivel atualizar o produto!');
+        throw new Error(mensagemErroApi(resposta, resultado, 'Não foi possivel atualizar o produto!'));
       }
 
       navigate('/home');

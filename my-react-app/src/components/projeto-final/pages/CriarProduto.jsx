@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, Container, FormControl, FormLabel, Heading, Input, Link, Text, Textarea } from '@chakra-ui/react';
 import { converterPreco, formatarPrecoDigitado } from './preco';
 import PageLayout from '../templates/PageLayout';
+import { API_URL, getAuthHeaders, lerResposta, mensagemErroApi } from '../services/api';
 
 export default function CriarProduto() {
   const navigate = useNavigate();
@@ -24,13 +25,11 @@ export default function CriarProduto() {
     }
 
     try {
-      const token = localStorage.getItem('token');
-
-      const resposta = await fetch('https://projeto-node-step-t5i1.vercel.app/produtos', {
+      const resposta = await fetch(`${API_URL}/produtos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          ...getAuthHeaders(),
         },
         body: JSON.stringify({
           nome: dados.nome,
@@ -42,10 +41,10 @@ export default function CriarProduto() {
         }),
       });
 
-      const resultado = await resposta.json();
+      const resultado = await lerResposta(resposta);
 
       if (!resposta.ok) {
-        throw new Error(resultado.mensagem || 'Não foi possível criar o produto.');
+        throw new Error(mensagemErroApi(resposta, resultado, 'Não foi possível criar o produto.'));
       }
 
       navigate('/home');

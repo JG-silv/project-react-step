@@ -6,6 +6,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ProductFilter from '../molecules/ProductFilter';
 import ProductList from '../organisms/ProductList';
 import PageLayout from '../templates/PageLayout';
+import { API_URL, getAuthHeaders, lerResposta, mensagemErroApi } from '../services/api';
 
 export default function Home() {
   const [produtos, setProdutos] = useState([]);
@@ -14,8 +15,8 @@ export default function Home() {
 
   async function buscarProdutos() {
     try {
-      const resposta = await fetch('https://projeto-node-step-t5i1.vercel.app/produtos');
-      const resultado = await resposta.json();
+      const resposta = await fetch(`${API_URL}/produtos`);
+      const resultado = await lerResposta(resposta);
 
       if (!resposta.ok) {
         throw new Error(resultado.mensagem || 'Não foi possível carregar os produtos.');
@@ -35,16 +36,15 @@ export default function Home() {
     if (!confirmou) return;
 
     try {
-      const token = localStorage.getItem('token');
-      const resposta = await fetch(`https://projeto-node-step-t5i1.vercel.app/produtos/${id}`, {
+      const resposta = await fetch(`${API_URL}/produtos/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: getAuthHeaders(),
       });
 
-      const resultado = await resposta.json();
+      const resultado = await lerResposta(resposta);
 
       if (!resposta.ok) {
-        throw new Error(resultado.mensagem || 'Não foi possível deletar o produto.');
+        throw new Error(mensagemErroApi(resposta, resultado, 'Não foi possível deletar o produto.'));
       }
 
       buscarProdutos();
@@ -56,8 +56,8 @@ export default function Home() {
   useEffect(() => {
     async function carregarProdutos() {
       try {
-        const resposta = await fetch('https://projeto-node-step-t5i1.vercel.app/produtos');
-        const resultado = await resposta.json();
+        const resposta = await fetch(`${API_URL}/produtos`);
+        const resultado = await lerResposta(resposta);
         if (!resposta.ok) throw new Error(resultado.mensagem || 'Não foi possível carregar os produtos.');
         const lista = Array.isArray(resultado) ? resultado : resultado.produtos || [];
         setProdutos(lista);
