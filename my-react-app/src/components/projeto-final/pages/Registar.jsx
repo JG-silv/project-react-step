@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, Container, FormControl, FormLabel, Heading, Input, Link, Select, Text } from '@chakra-ui/react';
+import PageLayout from '../templates/PageLayout';
 
 export default function Registar() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function Registar() {
   }
 
   return (
-    <Container maxW="400px" mt="50px" p="20px" borderWidth="1px" borderRadius="8px">
+    <PageLayout><Container maxW="400px" mt="50px" p="20px" borderWidth="1px" borderRadius="8px">
       <Heading size="lg" mb="20px">Registrar</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl isRequired mb="15px">
@@ -63,6 +64,6 @@ export default function Registar() {
           Já possui conta? <Link as={RouterLink} to="/login" color="blue.500">Entrar</Link>
         </Text>
       </form>
-    </Container>
+    </Container></PageLayout>
   );
 }

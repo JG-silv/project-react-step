@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { Button, Container, FormControl, FormLabel, Heading, Input, Link, Text, Textarea } from '@chakra-ui/react';
-import { converterPreco, formatarPrecoDigitado } from './preco';
+import { converterPreco, formatarPreco, formatarPrecoDigitado } from './preco';
+import PageLayout from '../templates/PageLayout';
 
-export default function CriarProduto() {
+export default function EditarProduto() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [dados, setDados] = useState({ nome: '', descricao: '', preco: '', categoria: '', estoque: '', imagem: '' });
   const [erro, setErro] = useState('');
@@ -12,6 +14,33 @@ export default function CriarProduto() {
     const valor = event.target.name === 'preco' ? formatarPrecoDigitado(event.target.value) : event.target.value;
     setDados({ ...dados, [event.target.name]: valor });
   }
+
+  useEffect(() => {
+    async function buscarProduto() {
+      try {
+        const resposta = await fetch(`https://projeto-node-step-t5i1.vercel.app/produtos/${id}`);
+        const resultado = await resposta.json();
+        const produto = resultado.produto || resultado;
+
+        if (!resposta.ok) {
+          throw new Error(resultado.mensagem || 'Não foi possivel carregar o produto!');
+        }
+
+        setDados({
+          nome: produto.nome || '',
+          descricao: produto.descricao || '',
+          preco: formatarPreco(produto.preco),
+          categoria: produto.categoria || '',
+          estoque: produto.estoque || '',
+          imagem: produto.imagem || produto.image || produto.foto || '',
+        });
+      } catch (error) {
+        setErro(error.message);
+      }
+    }
+
+    buscarProduto();
+  }, [id]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -24,9 +53,8 @@ export default function CriarProduto() {
 
     try {
       const token = localStorage.getItem('token');
-
-      const resposta = await fetch('https://projeto-node-step-t5i1.vercel.app/produtos', {
-        method: 'POST',
+      const resposta = await fetch(`https://projeto-node-step-t5i1.vercel.app/produtos/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -44,7 +72,7 @@ export default function CriarProduto() {
       const resultado = await resposta.json();
 
       if (!resposta.ok) {
-        throw new Error(resultado.mensagem || 'Não foi possível criar o produto.');
+        throw new Error(resultado.mensagem || 'Não foi possivel atualizar o produto!');
       }
 
       navigate('/home');
@@ -54,8 +82,8 @@ export default function CriarProduto() {
   }
 
   return (
-    <Container maxW="500px" mt="50px" p="20px" borderWidth="1px" borderRadius="8px">
-      <Heading size="lg" mb="20px">Criar produto</Heading>
+    <PageLayout><Container maxW="500px" mt="50px" p="20px" borderWidth="1px" borderRadius="8px">
+      <Heading size="lg" mb="20px">Editar produto</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl isRequired mb="15px">
           <FormLabel>Nome</FormLabel>
@@ -82,11 +110,11 @@ export default function CriarProduto() {
           <Input name="estoque" type="number" value={dados.estoque} onChange={handleChange} />
         </FormControl>
         {erro && <Text color="red.500" mb="15px">{erro}</Text>}
-        <Button type="submit" colorScheme="blue" width="100%">Criar produto</Button>
+        <Button type="submit" colorScheme="blue" width="100%">Salvar alterações</Button>
         <Text mt="15px">
           <Link as={RouterLink} to="/home" color="blue.500">Voltar para a Home</Link>
         </Text>
       </form>
-    </Container>
+    </Container></PageLayout>
   );
 }

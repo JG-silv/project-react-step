@@ -1,11 +1,11 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import Home from './components/aulas-integradas/Home';
-import Login from './components/aulas-integradas/Login';
-import Registar from './components/aulas-integradas/Registar';
-import CriarProduto from './components/aulas-integradas/CriarProduto';
-import EditarProduto from './components/aulas-integradas/EditarProduto';
+import Home from './components/projeto-final/pages/Home';
+import Login from './components/projeto-final/pages/Login';
+import Registar from './components/projeto-final/pages/Registar';
+import CriarProduto from './components/projeto-final/pages/CriarProduto';
+import EditarProduto from './components/projeto-final/pages/EditarProduto';
 
 const App = () => {
   return (

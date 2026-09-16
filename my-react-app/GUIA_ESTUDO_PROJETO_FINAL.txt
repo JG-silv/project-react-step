@@ -1,0 +1,616 @@
+GUIA DE ESTUDO - PROJETO FINAL REACT - José Gabriel 
+=====================================
+
+Este arquivo explica o que foi desenvolvido no projeto final, como o código esta organizado e como estudar cada parte.
+
+
+1. OBJETIVO DO PROJETO
+-----------------------
+
+O projeto e um catalogo de produtos feito com React.
+
+O usuario consegue:
+
+- Criar uma conta.
+- Fazer login.
+- Visualizar produtos.
+- Filtrar produtos pelo nome.
+- Criar produtos.
+- Editar produtos.
+- Deletar produtos.
+- Alternar entre tema claro e tema escuro.
+- Sair da conta.
+
+A aplicacao consome uma API publicada em:
+
+https://projeto-node-step-t5i1.vercel.app
+
+A organizacao do projeto final segue o conceito de Atomic Design.
+
+
+2. O QUE E ATOMIC DESIGN
+------------------------
+
+Atomic Design e uma forma de organizar interfaces em cinco niveis.
+
+2.1. Atomos
+
+Sao os menores componentes visuais. Eles normalmente representam elementos basicos:
+
+- Botao.
+- Input.
+- Label.
+- Texto.
+
+Neste projeto:
+
+src/components/projeto-final/atoms/Button.jsx
+src/components/projeto-final/atoms/Input.jsx
+src/components/projeto-final/atoms/Label.jsx
+
+Os atomos encapsulam componentes do Chakra UI. Assim, se for necessario mudar o comportamento ou o estilo padrao de um botao, existe um unico lugar para fazer isso.
+
+
+2.2. Moleculas
+
+Sao componentes formados pela combinacao de atomos.
+
+Neste projeto:
+
+- FormField.jsx: combina label e input para formar um campo de formulario.
+- ProductCard.jsx: combina imagem, titulo, preco e botoes de um produto.
+- ProductFilter.jsx: combina o AutoComplete do Material UI com o botao Filtrar.
+
+Pasta:
+
+src/components/projeto-final/molecules
+
+
+2.3. Organismos
+
+Sao secoes maiores da interface, formadas por varias moleculas.
+
+Neste projeto:
+
+- Header.jsx: logo, navegacao, tema e logout.
+- ProductList.jsx: lista os varios ProductCard.
+
+Pasta:
+
+src/components/projeto-final/organisms
+
+
+2.4. Templates
+
+Templates definem a estrutura geral de uma pagina.
+
+Neste projeto:
+
+- PageLayout.jsx: cria o layout comum e mostra o Header junto do conteudo principal.
+
+Pasta:
+
+src/components/projeto-final/templates
+
+
+2.5. Pages
+
+Pages sao as telas completas e possuem a logica de negocio da aplicacao.
+
+Neste projeto:
+
+- Login.jsx
+- Registar.jsx
+- Home.jsx
+- CriarProduto.jsx
+- EditarProduto.jsx
+- ProdutoImagem.jsx
+- preco.js
+
+Pasta:
+
+src/components/projeto-final/pages
+
+As pages fazem chamadas para a API, controlam estados e montam os componentes reutilizaveis.
+
+
+3. ESTRUTURA DE PASTAS
+----------------------
+
+src/
+|
+|-- App.jsx
+|-- main.jsx
+|-- App.css
+|-- index.css
+|
+|-- components/
+    |
+    |-- aulas/
+    |   |-- componentes das aulas anteriores
+    |   |-- aula7/
+    |   |-- aula8/
+    |   |-- aula9/
+    |   |-- aula10/
+    |
+    |-- projeto-final/
+        |
+        |-- atoms/
+        |   |-- Button.jsx
+        |   |-- Input.jsx
+        |   |-- Label.jsx
+        |
+        |-- molecules/
+        |   |-- FormField.jsx
+        |   |-- ProductCard.jsx
+        |   |-- ProductFilter.jsx
+        |
+        |-- organisms/
+        |   |-- Header.jsx
+        |   |-- ProductList.jsx
+        |
+        |-- templates/
+        |   |-- PageLayout.jsx
+        |
+        |-- pages/
+            |-- Home.jsx
+            |-- Login.jsx
+            |-- Registar.jsx
+            |-- CriarProduto.jsx
+            |-- EditarProduto.jsx
+            |-- ProdutoImagem.jsx
+            |-- preco.js
+
+As aulas anteriores ficam em components/aulas para nao misturar exercicios antigos com o projeto final.
+
+
+4. COMO O APP COMECA
+--------------------
+
+O arquivo main.jsx inicia o React e renderiza o componente App.
+
+O arquivo App.jsx configura duas bibliotecas importantes:
+
+- ChakraProvider: fornece os componentes e estilos do Chakra UI.
+- BrowserRouter: permite controlar as rotas da aplicacao.
+
+As rotas atuais sao:
+
+/                    redireciona para /login
+/login               tela de login
+/registrar           tela de cadastro
+/home                lista de produtos
+/produtos/criar      formulario de criacao
+/produto/:id        formulario de edicao
+
+A rota /produto/:id usa um parametro dinamico. Por exemplo:
+
+/produto/123
+
+Na pagina EditarProduto, o hook useParams() recupera o id 123 para buscar o produto correto na API.
+
+
+5. PAGE LAYOUT E HEADER
+-----------------------
+
+O PageLayout e o template usado pelas paginas. Ele recebe o conteudo por meio da prop children.
+
+Exemplo conceitual:
+
+<PageLayout>
+  conteudo da pagina
+</PageLayout>
+
+Dentro do PageLayout:
+
+- O Header e exibido.
+- O conteudo da pagina fica dentro de main.
+
+O Header possui:
+
+- Link para /home.
+- Botao de tema claro/escuro.
+- Botao Sair.
+
+
+6. COMO FUNCIONA O TEMA
+-----------------------
+
+O Header usa useState para guardar se o tema escuro esta ativo.
+
+O estado inicial e lido do localStorage:
+
+localStorage.getItem('tema') === 'dark'
+
+Quando o usuario troca o tema:
+
+1. O estado darkMode muda.
+2. O useEffect altera document.body.dataset.theme.
+3. O valor e salvo novamente no localStorage.
+4. O CSS aplica as cores correspondentes.
+
+Os valores usados sao:
+
+body[data-theme='dark']
+body[data-theme='light']
+
+Assim, o tema continua selecionado mesmo depois de atualizar a pagina.
+
+
+7. COMO FUNCIONA O LOGOUT
+-------------------------
+
+Ao clicar em Sair, o Header executa:
+
+localStorage.removeItem('token');
+navigate('/login');
+
+Isso faz duas coisas:
+
+- Remove o token salvo no navegador.
+- Redireciona o usuario para a tela de login.
+
+O token e usado nas requisicoes protegidas de criacao, edicao e exclusao de produtos.
+
+
+8. COMO FUNCIONA O LOGIN E O CADASTRO
+--------------------------------------
+
+Login.jsx:
+
+1. Guarda email e senha no estado dados.
+2. Atualiza os campos com onChange.
+3. Envia uma requisicao POST para /login.
+4. Recebe o token da API.
+5. Salva o token em localStorage.
+6. Redireciona para /home.
+
+Registar.jsx:
+
+1. Guarda nome, email, senha e role no estado.
+2. Envia os dados para /registrar.
+3. Se o cadastro funcionar, redireciona para /login.
+
+O useState e usado para controlar os dados digitados.
+O useNavigate e usado para mudar de pagina pelo codigo.
+
+
+9. COMO FUNCIONA A HOME
+-----------------------
+
+A Home e a pagina que lista os produtos.
+
+Ao ser carregada:
+
+1. O useEffect chama a API GET /produtos.
+2. A resposta e convertida para JSON.
+3. A lista e salva no estado produtos.
+4. A lista que aparece na tela e salva em produtosFiltrados.
+5. O ProductList recebe os produtos filtrados.
+
+A Home tambem possui a funcao handleDelete.
+
+Ao deletar:
+
+1. O usuario confirma a acao.
+2. O token e recuperado do localStorage.
+3. A API recebe DELETE /produtos/:id.
+4. A lista de produtos e carregada novamente.
+
+
+10. COMO FUNCIONA O FILTRO
+--------------------------
+
+O filtro esta em:
+
+src/components/projeto-final/molecules/ProductFilter.jsx
+
+Ele usa o componente Autocomplete do Material UI.
+
+Funcionamento:
+
+1. ProductFilter recebe a lista de produtos pela prop products.
+2. Os nomes dos produtos viram as opcoes do Autocomplete.
+3. O usuario escolhe um produto.
+4. O componente guarda a escolha em selectedProduct.
+5. Ao clicar em Filtrar, chama onFilter.
+6. A Home recebe o nome escolhido.
+7. A Home atualiza produtosFiltrados.
+8. ProductList mostra somente os produtos encontrados.
+
+Quando nenhuma opcao esta selecionada, o filtro envia uma string vazia e a lista original volta a aparecer.
+
+O componente foi separado para poder ser reutilizado em outras paginas.
+
+
+11. COMO FUNCIONA O PRODUCT CARD
+--------------------------------
+
+ProductCard representa um produto individual.
+
+Ele mostra:
+
+- Imagem.
+- Nome.
+- Categoria.
+- Descricao.
+- Preco.
+- Estoque.
+- Botao Editar.
+- Botao Deletar.
+
+O id pode vir como _id ou id:
+
+const id = product._id || product.id;
+
+O botao Editar navega para:
+
+/produto/id-do-produto
+
+O botao Deletar chama a funcao onDelete recebida pela prop.
+
+
+12. COMO FUNCIONA CRIAR PRODUTO
+-------------------------------
+
+CriarProduto.jsx controla os dados do formulario:
+
+- nome
+- descricao
+- preco
+- categoria
+- estoque
+- imagem
+
+O preco precisa ser tratado porque o usuario pode digitar no formato brasileiro, por exemplo:
+
+R$ 1.299,90
+
+O arquivo preco.js possui funcoes para:
+
+- formatarPreco: mostra o valor com duas casas decimais.
+- formatarPrecoDigitado: trata o valor enquanto o usuario digita.
+- converterPreco: transforma o texto em numero para enviar a API.
+
+Ao enviar:
+
+1. O preco e validado.
+2. O token e lido do localStorage.
+3. A requisicao POST /produtos e enviada.
+4. Depois do sucesso, a pagina volta para /home.
+
+
+13. COMO FUNCIONA EDITAR PRODUTO
+--------------------------------
+
+EditarProduto usa useParams para obter o id da rota.
+
+Ao abrir a tela:
+
+1. Busca o produto com GET /produtos/:id.
+2. Preenche o formulario com os dados recebidos.
+3. Formata o preco para exibicao.
+
+Ao salvar:
+
+1. Valida o preco.
+2. Recupera o token.
+3. Envia PUT /produtos/:id.
+4. Volta para /home quando a API responde com sucesso.
+
+
+14. IMAGENS DOS PRODUTOS
+------------------------
+
+ProdutoImagem tenta usar a imagem cadastrada no produto.
+
+Ele verifica campos como:
+
+- imagem
+- image
+- foto
+
+Se nao existir uma imagem, escolhe uma imagem padrao de acordo com o nome ou categoria, como notebook, smartphone, monitor, teclado ou mouse.
+
+Se a imagem falhar, o evento onError troca para uma imagem padrao.
+
+
+15. BIBLIOTECAS UTILIZADAS
+--------------------------
+
+React:
+Biblioteca principal para criar a interface.
+
+React DOM:
+Liga o React ao documento HTML.
+
+React Router DOM:
+Controla as paginas e navegacao.
+
+Chakra UI:
+Fornece componentes como Button, Box, Container, Heading e Card.
+
+Material UI:
+Fornece o Autocomplete utilizado no filtro.
+
+Emotion:
+Dependencia usada pelo Chakra UI.
+
+Vite:
+Ferramenta de desenvolvimento e build do projeto.
+
+ESLint:
+Analisa problemas de padrao e possiveis erros no codigo.
+
+
+16. COMO EXECUTAR LOCALMENTE
+----------------------------
+
+Abra o terminal na pasta my-react-app:
+
+cd project-react-step/my-react-app
+
+Instale as dependencias, se necessario:
+
+npm install
+
+Inicie o servidor de desenvolvimento:
+
+npm run dev
+
+Depois abra o endereco informado pelo Vite, normalmente:
+
+http://localhost:5173
+
+
+17. COMANDOS IMPORTANTES
+------------------------
+
+npm run dev
+Inicia o servidor local.
+
+npm run build
+Gera a versao de producao na pasta dist.
+
+npm run preview
+Abre localmente a versao gerada pelo build.
+
+npm run lint
+Verifica problemas de lint no projeto.
+
+
+18. COMO VALIDAR O PROJETO
+--------------------------
+
+Teste esta sequencia:
+
+1. Abrir /login.
+2. Criar uma conta em /registrar.
+3. Fazer login.
+4. Confirmar que /home lista os produtos.
+5. Usar o AutoComplete.
+6. Clicar em Filtrar.
+7. Criar um produto.
+8. Editar o produto.
+9. Deletar o produto.
+10. Alternar o tema.
+11. Clicar em Sair.
+12. Confirmar que o token foi removido e a tela voltou para /login.
+
+
+19. COMO PUBLICAR NA VERCEL
+---------------------------
+
+Antes de publicar, execute:
+
+npm run build
+
+Se o build passar, envie o projeto para o GitHub:
+
+git add .
+git commit -m "projeto final: organiza codigo com atomic design"
+git push --set-upstream origin projeto-final
+
+Na Vercel:
+
+1. Acesse https://vercel.com.
+2. Entre com GitHub.
+3. Escolha Add New e depois Project.
+4. Selecione o repositorio projeto-react-step.
+5. Confirme o framework Vite.
+6. Use npm run build como comando de build.
+7. Use dist como diretorio de saida.
+8. Clique em Deploy.
+
+Depois do deploy, teste login, cadastro e todas as operacoes do CRUD pela URL publica.
+
+
+20. ORDEM RECOMENDADA PARA ESTUDAR
+----------------------------------
+
+Estude nesta ordem:
+
+1. src/main.jsx
+   Entenda onde o React comeca.
+
+2. src/App.jsx
+   Entenda o ChakraProvider, BrowserRouter e as rotas.
+
+3. src/components/projeto-final/templates/PageLayout.jsx
+   Entenda o layout comum.
+
+4. src/components/projeto-final/organisms/Header.jsx
+   Estude useState, useEffect, localStorage e useNavigate.
+
+5. src/components/projeto-final/atoms
+   Veja como componentes pequenos sao reutilizados.
+
+6. src/components/projeto-final/molecules
+   Entenda como atomos formam componentes mais completos.
+
+7. src/components/projeto-final/organisms/ProductList.jsx
+   Veja como uma lista renderiza varios cards.
+
+8. src/components/projeto-final/pages/Home.jsx
+   Estude fetch, useEffect, useState, filtro e exclusao.
+
+9. CriarProduto.jsx e EditarProduto.jsx
+   Estude formularios, validacao e requisicoes protegidas.
+
+10. App.css e index.css
+    Entenda como o visual e o tema sao aplicados.
+
+
+21. CONCEITOS REACT PRESENTES NO PROJETO
+----------------------------------------
+
+useState:
+Cria estados locais, como dados do formulario e lista de produtos.
+
+useEffect:
+Executa efeitos, como buscar dados da API ou sincronizar o tema.
+
+props:
+Permitem passar dados e funcoes de um componente pai para um filho.
+
+children:
+Permite que o PageLayout receba qualquer conteudo interno.
+
+map:
+Transforma uma lista de produtos em varios componentes ProductCard.
+
+eventos:
+Eventos como onChange, onClick, onSubmit e onError respondem as acoes do usuario.
+
+fetch:
+Faz comunicacao com a API.
+
+localStorage:
+Guarda o token de login e a preferencia do tema no navegador.
+
+rotas:
+Permitem navegar entre telas sem recarregar toda a pagina.
+
+
+22. RESUMO FINAL
+----------------
+
+O projeto foi reorganizado para separar responsabilidades:
+
+- Atomos cuidam dos elementos basicos.
+- Moleculas combinam elementos basicos.
+- Organismos formam secoes completas.
+- Templates definem o layout.
+- Pages controlam a logica e os dados.
+
+Essa separacao facilita:
+
+- Reutilizacao.
+- Manutencao.
+- Leitura do projeto.
+- Crescimento da aplicacao.
+- Trabalho em equipe.
+
+A regra principal para continuar evoluindo o projeto e manter cada componente com uma responsabilidade clara.
+
+Criado por José Gabriel - https://github.com/JG-silv
